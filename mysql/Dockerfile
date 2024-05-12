@@ -1,6 +1,7 @@
 FROM mysql:8.0.37-debian
 
 COPY my.cnf /etc/mysql/conf.d/my.cnf
+COPY ./init /docker-entrypoint-initdb.d
 
 # 日本語環境を追加
 RUN apt-get update \

@@ -15,14 +15,14 @@ services:
       TZ: ${TZ}
     volumes:
       - mydb:/var/lib/mysql
-      - ./mysql/init:/docker-entrypoint-initdb.d
+      # - ./mysql/init:/docker-entrypoint-initdb.d
 
   backend:
     build: backend
     container_name: backend
     restart: always
     ports:
-      - "3001:3000"
+      - "3001:3001"
     depends_on:
       - mysql
     environment:
@@ -32,6 +32,17 @@ services:
       MYSQL_USER: ${DB_USER}
       MYSQL_PASSWORD: ${DB_PASS}
       PORT: ${PORT}
+
+  frontend:
+    build: frontend
+    container_name: frontend
+    restart: always
+    ports:
+      - "3000:3000"
+    environment:
+      REACT_APP_AUTH_USER_POOL_ID: ${REACT_APP_AUTH_USER_POOL_ID}
+      REACT_APP_AUTH_USER_POOL_CLIENT_ID: ${REACT_APP_AUTH_USER_POOL_CLIENT_ID}
+      REACT_APP_API_URL: ${REACT_APP_API_URL}
 
 volumes:
   mydb:
