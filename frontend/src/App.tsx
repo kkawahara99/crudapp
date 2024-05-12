@@ -1,3 +1,4 @@
+import React from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import './App.css';
 import Header from './components/Header';
@@ -10,8 +11,8 @@ import { ConfirmSignUp } from './pages/ConfirmSignUp';
 import { ResetPassword } from './pages/ResetPassword';
 import { ConfirmResetPassword } from './pages/ConfirmResetPassword';
 import { Articles } from './pages/articles';
-import ArticleCreate from './pages/articles/create';
-import ArticleUpdate from './pages/articles/update';
+import ArticleCreate from './pages/articles/Create';
+import ArticleUpdate from './pages/articles/Update';
 
 function App() {
   const auth = useAuth();

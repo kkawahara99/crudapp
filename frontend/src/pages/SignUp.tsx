@@ -14,7 +14,7 @@ export function SignUp() {
     event.preventDefault();
     const result = await auth.signUp(username, email, password);
     if (result.success) {
-      navigate({ pathname: '/confirm' });
+      navigate({ pathname: '/confirmsignup' });
     } else {
       alert(result.message);
     }
