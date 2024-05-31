@@ -32,6 +32,8 @@ services:
       MYSQL_USER: ${DB_USER}
       MYSQL_PASSWORD: ${DB_PASS}
       PORT: ${PORT}
+    volumes:
+      - ./backend:/usr/src/app
 
   frontend:
     build: frontend
@@ -43,6 +45,8 @@ services:
       REACT_APP_AUTH_USER_POOL_ID: ${REACT_APP_AUTH_USER_POOL_ID}
       REACT_APP_AUTH_USER_POOL_CLIENT_ID: ${REACT_APP_AUTH_USER_POOL_CLIENT_ID}
       REACT_APP_API_URL: ${REACT_APP_API_URL}
+    volumes:
+      - ./frontend:/usr/src/app
 
 volumes:
   mydb:

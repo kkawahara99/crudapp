@@ -3,14 +3,22 @@ import connection from './DatabaseService';
 import Article from '../models/Article';
 
 class ArticleService {
-  getArticles(userId: string): Promise<Article[]> {
-    const sql = `SELECT * FROM article WHERE is_published = TRUE OR created_by = :createdBy ORDER BY created_at`;
+  getArticles(userId: string): Promise<QueryResult> {
+    const sql = `
+      SELECT
+        article.id, article.title, article.contents, article.is_published, article.created_by, article.created_at, article.updated_by, article.updated_at, COALESCE(COUNT(favorite.user_id), 0) AS fav_count
+      FROM article
+      LEFT JOIN favorite ON article.id = favorite.article_id
+      WHERE is_published = TRUE OR article.created_by = :userId
+      GROUP BY article.id
+      ORDER BY created_at
+    `;
     return new Promise((resolve, reject) => {
-      connection.query(sql, {createdBy: userId}, (error, results) => {
+      connection.query(sql, {userId: userId}, (error, results) => {
         if (error) {
           reject(error);
         } else {
-          resolve(results as Article[]);
+          resolve(results);
         }
       });
     });
@@ -57,13 +65,63 @@ class ArticleService {
 
   deleteArticles(id: string): Promise<QueryResult> {
     return new Promise((resolve, reject) => {
-      const query = `DELETE FROM article WHERE id=:id`;
-      connection.query(query, {id: id}, (error, results) => {
-        if (error) {
-          reject(error);
-        } else {
-          resolve(results);
+      connection.getConnection((err, connection) => {
+        if (err) {
+          reject(err);
+          return;
         }
+
+        const deleteFavoritesQuery = `DELETE FROM favorite WHERE article_id = :id`;
+        const deleteArticleQuery = `DELETE FROM article WHERE id = :id`;
+
+        // トランザクションを開始する
+        connection.beginTransaction((err) => {
+          if (err) {
+            connection.release();
+            reject(err);
+            return;
+          }
+
+          // 記事のいいねテーブルのレコードを削除
+          connection.query(deleteFavoritesQuery, { id: id }, (error, favoriteResults) => {
+            if (error) {
+              // ロールバックしてエラーを返す
+              connection.rollback(() => {
+                connection.release();
+                reject(error);
+              });
+              return;
+            }
+
+            // 記事テーブルのレコードを削除
+            connection.query(deleteArticleQuery, { id: id }, (error, articleResults) => {
+              if (error) {
+                // ロールバックしてエラーを返す
+                connection.rollback(() => {
+                  connection.release();
+                  reject(error);
+                });
+                return;
+              }
+
+              // コミットして成功を返す
+              connection.commit((err) => {
+                if (err) {
+                  // コミットに失敗した場合はロールバックしてエラーを返す
+                  connection.rollback(() => {
+                    connection.release();
+                    reject(err);
+                  });
+                  return;
+                }
+
+                // コネクションを解放して結果を返す
+                connection.release();
+                resolve(articleResults);
+              });
+            });
+          });
+        });
       });
     });
   }
