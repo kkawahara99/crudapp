@@ -96,6 +96,16 @@ export function Articles() {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [auth]);
 
+  // 改行文字を<br>タグに変換する関数
+  const renderTextWithLineBreaks = (text: string) => {
+    return text.split('\n').map((line, index) => (
+      <React.Fragment key={index}>
+        {line}
+        <br />
+      </React.Fragment>
+    ));
+  };
+
   return (
     <Container maxWidth="xs">
       <h1>記事一覧</h1>
@@ -108,7 +118,7 @@ export function Articles() {
         articles.map((article) => (
           <Card sx={{ marginTop: 2 }} key={article.id}>
             <h3>{article.title}</h3>
-            <p>{article.contents}</p>
+            <p>{renderTextWithLineBreaks(article.contents)}</p>
             {article.is_published ? 
               <div>公開中</div>
               :

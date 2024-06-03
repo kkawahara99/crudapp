@@ -24,19 +24,21 @@ function App() {
   return (
     <BrowserRouter>
       <Header />
-      <Breadcrumb />
-      <Routes>
-        <Route index element={<Top />} />
-        <Route path="/signin" element={<SignIn />} />
-        <Route path="/signup" element={<SignUp />} />
-        <Route path="/confirmsignup" element={<ConfirmSignUp />} />
-        <Route path="/resetpassword" element={<ResetPassword />} />
-        <Route path="/confirmresetpassword" element={<ConfirmResetPassword />} />
-        <Route path="/articles" element={<Articles />} />
-        <Route path="/articles/create" element={<ArticleCreate />} />
-        <Route path="/articles/update" element={<ArticleUpdate />} />
-        <Route path="*" element={<p>Page Not Found</p>} />
-      </Routes>
+      <div style={{ marginTop: '80px' }}>
+        <Breadcrumb />
+        <Routes>
+          <Route index element={<Top />} />
+          <Route path="/signin" element={<SignIn />} />
+          <Route path="/signup" element={<SignUp />} />
+          <Route path="/confirmsignup" element={<ConfirmSignUp />} />
+          <Route path="/resetpassword" element={<ResetPassword />} />
+          <Route path="/confirmresetpassword" element={<ConfirmResetPassword />} />
+          <Route path="/articles" element={<Articles />} />
+          <Route path="/articles/create" element={<ArticleCreate />} />
+          <Route path="/articles/update" element={<ArticleUpdate />} />
+          <Route path="*" element={<p>Page Not Found</p>} />
+        </Routes>
+      </div>
     </BrowserRouter>
   );
 }
