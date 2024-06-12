@@ -7,3 +7,9 @@ node_modules
 .cdk.staging
 cdk.out
 node_modules
+
+# env
+.env*
+
+# memo
+memo.txt
