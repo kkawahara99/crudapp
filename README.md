@@ -1,6 +1,4 @@
-# ALB-ECS-Aurora-CI/CD構成
-
-ECSを主体としたアーキテクチャ。
+ECSを主体としたサンプルアプリケーションをAWS CDKで構築。
 
 ## 構成図
 ![構成図](docs/alb_ecs_aurora.drawio.svg)
