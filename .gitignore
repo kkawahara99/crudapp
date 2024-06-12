@@ -1,8 +1,9 @@
-# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+*.js
+!jest.config.js
+*.d.ts
+node_modules
 
-# env
-.env*
-
-# memo
-memo.txt
-
+# CDK asset staging directory
+.cdk.staging
+cdk.out
+node_modules

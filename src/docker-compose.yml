@@ -1,0 +1,51 @@
+services:
+  mysql:
+    build: mysql
+    container_name: mysql
+    restart: always
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: ${DB_NAME}
+      MYSQL_USER: ${DB_USER}
+      MYSQL_PASSWORD: ${DB_PASS}
+      TZ: ${TZ}
+    volumes:
+      - mydb:/var/lib/mysql
+
+  backend:
+    build: backend
+    container_name: backend
+    restart: always
+    ports:
+      - "3001:3001"
+    depends_on:
+      - mysql
+    environment:
+      MYSQL_HOST: ${DB_HOST}
+      MYSQL_PORT: 3306
+      MYSQL_DATABASE: ${DB_NAME}
+      MYSQL_USER: ${DB_USER}
+      MYSQL_PASSWORD: ${DB_PASS}
+      PORT: ${PORT}
+    volumes:
+      - ./backend:/usr/src/app
+
+  frontend:
+    build: 
+      context: frontend
+      dockerfile: Dockerfile.local
+    container_name: frontend
+    restart: always
+    ports:
+      - "3000:3000"
+    environment:
+      REACT_APP_AUTH_USER_POOL_ID: ${REACT_APP_AUTH_USER_POOL_ID}
+      REACT_APP_AUTH_USER_POOL_CLIENT_ID: ${REACT_APP_AUTH_USER_POOL_CLIENT_ID}
+      REACT_APP_API_URL: ${REACT_APP_API_URL}
+    volumes:
+      - ./frontend:/usr/src/app
+
+volumes:
+  mydb:

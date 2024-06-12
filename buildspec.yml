@@ -1,0 +1,19 @@
+version: 0.2
+
+phases:
+  install:
+    runtime-versions:
+      nodejs: 20
+    commands:
+      - npm -g install typescript
+      - npm -g install aws-cdk
+      - npm install cdk-nag
+  build:
+    commands:
+      - npx cdk deploy AppStack -c envId=${ENV_ID}
+        -c userPoolId=${USER_POOL_ID}
+        -c userPoolClientId=${USER_POOL_CLIENT_ID}
+        -c apiUrl=${API_URL}
+        -c certificateArn=${CERTIFICATE_ARN}
+        -c commitHash=${CODEBUILD_RESOLVED_SOURCE_VERSION}
+        --require-approval never
