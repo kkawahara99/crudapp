@@ -68,17 +68,17 @@
     
     "sysId": "sample",
     "envId": "dev",
-    "projectName": "",
+    "projectName": "hashi",
     "env": {
-      "account": "",
-      "region": ""
+      "account": "686953432806",
+      "region": "ap-northeast-1"
     },
     "github": {
-      "owner": "",
-      "repo": "",
+      "owner": "kkawahara99",
+      "repo": "crudapp",
       "connectionArn": "",
       "branch": {
-        "dev": "develop",
+        "dev": "main",
         "stg": "staging",
         "prd": "main"
       }
