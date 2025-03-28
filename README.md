@@ -116,7 +116,7 @@ ECSを主体としたサンプルアプリケーションをAWS CDKで構築。
 
 1. Baseスタックをデプロイする。
     ```sh
-    cdk deploy BaseStack
+    npx cdk deploy BaseStack
     ```
 
 1. 初期DBスキーマ情報登録
@@ -159,7 +159,7 @@ ECSを主体としたサンプルアプリケーションをAWS CDKで構築。
 
 1. CI/CDスタックをデプロイする。
     ```sh
-    cdk deploy CicdStack
+    npx cdk deploy CicdStack
     ```
 
 CI/CDスタックが正常にデプロイされると、CI/CDスタックからAPPスタックがデプロイされる。

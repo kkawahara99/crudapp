@@ -113,7 +113,7 @@ export class BaseStack extends cdk.Stack {
     const cluster = new ecs.Cluster(this, 'EcsCluster', {
       clusterName: `${props.sysId}-${props.envId}-ecs-cluster`,
       vpc: vpcConstruct.vpc,
-      containerInsights: true,
+      containerInsightsV2: ecs.ContainerInsights.ENABLED,
     });
     
     // ロードバランサー
