@@ -32,7 +32,7 @@ export class Cognito extends Construct {
         requireSymbols: true,
         tempPasswordValidity: cdk.Duration.days(7),
       },
-      advancedSecurityMode: cognito.AdvancedSecurityMode.ENFORCED,
+      // advancedSecurityMode: cognito.AdvancedSecurityMode.ENFORCED,
       removalPolicy: cdk.RemovalPolicy.DESTROY,
     });
     

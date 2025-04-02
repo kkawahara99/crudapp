@@ -161,18 +161,18 @@ export class Analytics extends Construct {
       },
     });
 
+    // ETLジョブロール
+    const glueRole = new iam.Role(this, 'GlueEtlRole', {
+      assumedBy: new iam.ServicePrincipal('glue.amazonaws.com'),
+    });
+
+    glueRole.addManagedPolicy(iam.ManagedPolicy.fromAwsManagedPolicyName('service-role/AWSGlueServiceRole'));
+
     // ETLジョブ
-    const job = new glue_alpha.Job(this, 'Job', {
+    const job = new glue_alpha.PySparkEtlJob(this, 'GlueJob', {
       jobName: props.jobName,
       description: props.jobDescription,
-      sparkUI: {
-        enabled: false,
-      },
-      executable: glue_alpha.JobExecutable.pythonEtl({
-        glueVersion: glue_alpha.GlueVersion.V4_0,
-        pythonVersion: glue_alpha.PythonVersion.THREE,
-        script: glue_alpha.Code.fromAsset(props.codePath),
-      }),
+      script: glue_alpha.Code.fromAsset(props.codePath),
       defaultArguments: {
         '--job-bookmark-option': 'job-bookmark-disable',
         '--enable-glue-datacatalog': 'true',
@@ -182,10 +182,10 @@ export class Analytics extends Construct {
       },
       maxConcurrentRuns: 2,
       connections: [connection],
+      role: glueRole,
     });
     
     // Glue Job 権限付与
-    job.role.addManagedPolicy(iam.ManagedPolicy.fromAwsManagedPolicyName('service-role/AWSGlueServiceRole'));
     props.secret.grantRead(job.role);
     props.sourceRds.grantConnect(job.role, '*');
     bucket.grantReadWrite(job.role);

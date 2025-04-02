@@ -113,6 +113,10 @@ NagSuppressions.addStackSuppressions(baseStack, [
     reason: 'MFA is not required'
   },
   {
+    id: "AwsSolutions-COG3",
+    reason: 'AdvancedSecurityMode is not required'
+  },
+  {
     id: 'AwsSolutions-GL1',
     reason:'CloudWatch Logs does not include logs that should not be leaked to the outside world'
   },

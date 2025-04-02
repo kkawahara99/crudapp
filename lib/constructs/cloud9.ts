@@ -3,7 +3,7 @@ import * as ec2 from 'aws-cdk-lib/aws-ec2';
 import * as iam from 'aws-cdk-lib/aws-iam';
 import * as cloud9 from '@aws-cdk/aws-cloud9-alpha';
 import { Construct } from 'constructs';
-import { IAM } from 'aws-sdk';
+import { IAMClient, GetUserCommand } from '@aws-sdk/client-iam';
 
 export interface Cloud9Props {
   env: cdk.Environment;
@@ -46,11 +46,11 @@ export class Cloud9 extends Construct {
 
   // Cloud9 環境の所有者ARNを取得する関数
   private async getOwnerArn(ownerName: string, accountId: string, region: string): Promise<cloud9.Owner> {
-    const iamClient = new IAM({ region: region });
+    const iamClient = new IAMClient({ region: region });
 
     return new Promise(async (resolve, reject) => {
       try {
-        const userResponse = await iamClient.getUser({ UserName: ownerName }).promise();
+        const userResponse = await iamClient.send(new GetUserCommand({ UserName: ownerName }));
         if (userResponse) {
           resolve(cloud9.Owner.user(iam.User.fromUserName(this, 'User', ownerName)));
           return;
