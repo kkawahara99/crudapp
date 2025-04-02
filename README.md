@@ -40,6 +40,16 @@ ECSを主体としたサンプルアプリケーションをAWS CDKで構築。
     ├── package.json
     └── tsconfig.json
 
+## 前提
+- 次のバージョンのツール類がインストールされていること。
+    ```zsh
+    % node -v
+    v20.19.0
+    % npm -v
+    11.2.0
+    % cdk --version
+    2.176.0 (build 899965d)
+    ```
 ## デプロイ方法
 
 1. CodeStar接続の作成  
@@ -280,9 +290,9 @@ Athenaでクエリしたビュー表を棒グラフ化する例。
 
 1. 以下コマンドを順に実行。
 ```sh
-cdk destroy AppStack
-cdk destroy CicdStack
-cdk destroy BaseStack
+npx cdk destroy AppStack
+npx cdk destroy CicdStack
+npx cdk destroy BaseStack
 ```
 
 ## 使用技術

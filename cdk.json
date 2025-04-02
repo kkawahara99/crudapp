@@ -68,15 +68,15 @@
     
     "sysId": "sample",
     "envId": "dev",
-    "projectName": "hashi",
+    "projectName": "crudapp",
     "env": {
-      "account": "686953432806",
-      "region": "ap-northeast-1"
+      "account": "",
+      "region": ""
     },
     "github": {
-      "owner": "kkawahara99",
-      "repo": "crudapp",
-      "connectionArn": "arn:aws:codestar-connections:ap-northeast-1:686953432806:connection/4b220593-f75c-43f6-87b1-5b6513bfe9a2",
+      "owner": "",
+      "repo": "",
+      "connectionArn": "",
       "branch": {
         "dev": "develop",
         "stg": "staging",
@@ -84,8 +84,8 @@
       }
     },
     "domain": "",
-    "certificateArn": "arn:aws:acm:ap-northeast-1:686953432806:certificate/08a944fb-682a-4f8d-b0a5-76e5b9926483",
-    "cloud9Owner": "iam-root",
+    "certificateArn": "",
+    "cloud9Owner": "",
     "networkConf": {
       "cidrBlock": "10.0.0.0/16",
       "cidrMaskPub": 24,
@@ -98,7 +98,7 @@
       "minCapacity": 0.5,
       "maxCapacity": 1,
       "glueCodePath": "src/glue/etl.py",
-      "email": "kkawahara99@gmail.com",
+      "email": "",
       "etlCron": "cron(0 3 * * ? *)"
     }
   }
